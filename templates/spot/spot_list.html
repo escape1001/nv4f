@@ -1,0 +1,17 @@
+{% extends "base/base.html" %}
+{% block contents %}
+<h2>여행지목록~~~</h2>
+<form method="get" action="/">
+    <input name="q" placeholder="제목 혹은 설명글 검색"/>
+    <button>검색</button>
+</form>
+<ul>
+    {% for spot in spot_list %}
+    <li>
+        <a href="{% url 'spot_detail' spot.id %}">
+            {{spot.title}}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock contents %}

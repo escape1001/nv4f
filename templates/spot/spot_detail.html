@@ -1,0 +1,9 @@
+{% extends "base/base.html" %}
+{% block contents %}
+<h2>여행지 상세~~~</h2>
+<h3>{{spot.title}}</h3>
+<p>{{spot.contents}}</p>
+<p>
+    <img src="{{spot.img_path.url}}"/>
+</p>
+{% endblock contents %}

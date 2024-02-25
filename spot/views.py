@@ -1,8 +1,20 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from .models import Spot
+from django.db.models import Q
 
 def spot_list(request):
-    return HttpResponse("<h1>spot_list</h1>")
+    if request.GET.get("q"):
+        q = request.GET.get("q")
+        spots = Spot.objects.filter(
+            Q(title__icontains = q) | Q(contents__icontains = q)
+        ).distinct()
+    else :
+        spots = Spot.objects.all()
+
+    context = {"spot_list":spots}
+    return render(request, "spot/spot_list.html", context)
 
 def spot_detail(request, id):
-    return HttpResponse(f"<h1>spot_detail {id}</h1>")
+    spot = Spot.objects.get(id=id)
+    context = {"spot": spot}
+    return render(request, "spot/spot_detail.html", context)
