@@ -4,22 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nav4Fuse</title>
+    <style>
+        .center-content{
+            width:90%;
+            max-width:1080px;
+            margin:0 auto;
+        }
+
+        header{
+            background:#efefef;
+        }
+    
+        header .inner{
+            display:flex;
+            justify-content:space-between;
+            align-item:center;
+        }    
+        
+        header ul{
+            list-style:none;
+            display:flex;
+            gap:2rem;
+        }
+
+        main{
+            padding:50px 0;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>Logo</h1>
-        <ul>
-            <li>
-                <a href="/">목록</a>
-            </li>
-            <li>
-                <a href="/user/report">글쓰기</a>
-            </li>
-        </ul>
-    </header>
-    <main>
+    {% include "base/header.html" %}
+    <main class="center-content">
         {% block contents %}
-        {% endblock contents %}
+        {% endblock %}
     </main>
 </body>
 </html>

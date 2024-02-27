@@ -1,0 +1,33 @@
+<header>
+    <div class="center-content inner">
+        <h1>
+            <a href="{% url "spot_list" %}">HOME</a>
+        </h1>
+        <ul>
+            {% if request.user.is_authenticated %}
+            <li>
+                안녕하세요, {{ request.user.username }}님!
+            </li>
+            <li>
+                <a href="{% url "spot_write" %}">글쓰기</a>
+            </li>
+            <li>
+                <form action="{% url "signout" %}" method="POST">
+                    {% csrf_token %}
+                    <button>로그아웃</button>
+                </form>
+            </li>
+            {% else %}
+            <li>
+                로그인을 하셔요
+            </li>
+            <li>
+                <a href="{% url "signin" %}">로그인</a>
+            </li>
+            <li>
+                <a href="/user/signup">회원가입</a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</header>

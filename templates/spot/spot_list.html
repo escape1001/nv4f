@@ -14,4 +14,7 @@
     </li>
     {% endfor %}
 </ul>
+
+{% comment %} {% if request.user.is_authenticated %} {% endcomment %}
+<a href="{% url "spot_write" %}">글쓰기</a>
 {% endblock contents %}

@@ -1,9 +1,17 @@
 {% extends "base/base.html" %}
 {% block contents %}
 <h2>여행지 상세~~~</h2>
-<h3>{{spot.title}}</h3>
-<p>{{spot.contents}}</p>
+<h3>{{object.title}}</h3>
+<p>{{object.contents}}</p>
+{% if object.img_path %}
 <p>
-    <img src="{{spot.img_path.url}}"/>
+    <img src="{{object.img_path.url}}"/>
 </p>
+{% endif %}
+
+<a href="{% url "spot_update" object.pk %}">수정하기</a>
+<form action="{% url "spot_delete" object.pk %}" method="POST">
+    {% csrf_token %}
+    <button>삭제하기</button>
+</form>
 {% endblock contents %}
