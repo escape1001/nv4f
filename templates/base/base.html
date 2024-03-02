@@ -1,36 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nav4Fuse</title>
-    <style>
-        .center-content{
-            width:90%;
-            max-width:1080px;
-            margin:0 auto;
-        }
-
-        header{
-            background:#efefef;
-        }
-    
-        header .inner{
-            display:flex;
-            justify-content:space-between;
-            align-item:center;
-        }    
-        
-        header ul{
-            list-style:none;
-            display:flex;
-            gap:2rem;
-        }
-
-        main{
-            padding:50px 0;
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
     {% include "base/header.html" %}
