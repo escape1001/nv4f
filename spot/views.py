@@ -1,4 +1,4 @@
-from .models import Spot
+from .models import Post
 from django.db.models import Q
 from django.urls import reverse_lazy, reverse
 from django.views.generic import (
@@ -9,14 +9,14 @@ from rest_framework import viewsets, permissions, generics, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
-from .serializer import SpotSerializer
+from .serializer import PostSerializer
 
 
 @api_view(['GET'])
 def spot_list(request):
     if request.method == 'GET' :
-        spotlist = Spot.objects.all()
-        serializer = SpotSerializer(spotlist, many=True)
+        spotlist = Post.objects.all()
+        serializer = PostSerializer(spotlist, many=True)
         return Response(serializer.data)
     
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -25,8 +25,8 @@ def spot_list(request):
 @api_view(['GET'])
 def spot_detail(request, pk):
     if request.method == 'GET' :
-        spotlist = Spot.objects.get(pk=pk)
-        serializer = SpotSerializer(spotlist)
+        spotlist = Post.objects.get(pk=pk)
+        serializer = PostSerializer(spotlist)
         return Response(serializer.data)
     
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

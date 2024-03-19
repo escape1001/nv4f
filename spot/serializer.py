@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from .models import Spot
+from .models import Post
 
-class SpotSerializer(serializers.ModelSerializer):
+class PostSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Spot
+        model = Post
         fields = '__all__'
