@@ -38,8 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # created app
-    'spot',
-    'user',
+    'archive',
+    'accounts',
     # django lib app
     "rest_framework",
     "corsheaders",
