@@ -1,11 +1,11 @@
 from django.test import TestCase, Client
-from django.contrib.auth.models import User
+from .models import CustomUser
 
 class AccountsTest(TestCase):
     def setUp(self):
         self.client = Client()
 
-        self.user = User.objects.create_user(username='test', password='test1234!')
+        self.user = CustomUser.objects.create_user(username='test', password='test1234!')
         self.user.save()
 
         

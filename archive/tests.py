@@ -1,15 +1,15 @@
 from django.test import TestCase, Client
-from django.contrib.auth.models import User
+from accounts.models import CustomUser
 from .models import Post
 
 class AccountsTest(TestCase):
     def setUp(self):
         self.client = Client()
 
-        self.user = User.objects.create_user(username='test', password='test1234!')
+        self.user = CustomUser.objects.create_user(username='test', password='test1234!')
         self.user.save()
 
-        self.user2 = User.objects.create_user(username='test2', password='test1234!')
+        self.user2 = CustomUser.objects.create_user(username='test2', password='test1234!')
         self.user2.save()
 
         self.post_001 = Post.objects.create(
@@ -87,7 +87,7 @@ class AccountsTest(TestCase):
         
         print('>> 회원타인 포스트 수정 시도')
         self.client.logout()
-        self.user = User.objects.create_user(username='test2', password='test1234!')
+        self.client.login(username='test2', password='test1234!')
         response = self.client.put(f'/archive/post/{post_id}',{
                 'title' : '수정테스트',
                 'contents' : '설명글~~',
@@ -104,7 +104,7 @@ class AccountsTest(TestCase):
         
         print('>> 회원본인 포스트 수정 시도')
         self.client.logout()
-        self.user = User.objects.create_user(username='test', password='test1234!')
+        self.client.login(username='test', password='test1234!')
         response = self.client.put(f'/archive/post/{post_id}',{
                 'title' : '수정테스트',
                 'contents' : '설명글~~',
