@@ -12,10 +12,10 @@ def post_create(request):
     pass
 
 
-def post_update(request):
+def post_filter_list(request):
     pass
 
 
-def post_delete(request):
+def post_like_toggle(request):
     pass
 
