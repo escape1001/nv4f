@@ -6,7 +6,7 @@ from .managers import CustomUserManager
 
 class CustomUser(AbstractUser):
     username = models.CharField(max_length=20, unique=True)
-    nickname = models.CharField(max_length=20, unique=True)
+    nickname = models.CharField(max_length=20)
     profile_image = models.ImageField(upload_to='profile_image/', blank=True, null=True)
     
     objects = CustomUserManager()    
