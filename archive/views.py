@@ -55,7 +55,62 @@ def post_create(request):
 
 @api_view(["GET"])
 def post_filter_list(request):
-    pass
+    categories = request.GET.getlist("categories")
+    members = request.GET.getlist("members")
+    country = request.GET.get("country")
+    city = request.GET.get("city")
+    district = request.GET.get("district")
+
+    '''아래 모양으로 리턴
+    {
+        categories : ['음식', '숙소'],
+        members : ['홍길동', '김철수'],
+        locations : [
+            {
+                country_name : '한국',
+                city : [
+                    {
+                        city_name : '서울',
+                        district : ['강남', '강북']
+                    }
+                ]
+            },
+            {
+                country_name : '일본',
+                city : [
+                    {
+                        city_name : '도쿄',
+                        district : ['신주쿠', '아키하바라']
+                    }
+                ]
+            }
+        ]
+    }
+    '''
+
+    locations = []
+
+    for country in Country.objects.all():
+        country_data = {
+            "country_name": country.name,
+            "city": []
+        }
+        for city in country.city_set.all():
+            city_data = {
+                "city_name": city.name,
+                "district": city.district_set.values_list("name", flat=True)
+            }
+            country_data["city"].append(city_data)
+        locations.append(country_data)
+
+    data = {
+        "categories": Category.objects.filter(name__in=categories).values_list("name", flat=True),
+        "members": Member.objects.filter(name__in=members).values_list("name", flat=True),
+        "locations": locations
+    }
+
+    return Response(data)
+
 
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
