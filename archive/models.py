@@ -32,7 +32,7 @@ class Post(models.Model):
     title = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, blank=True)
     is_show = models.BooleanField(default=True)
     level = models.IntegerField(choices=LEVEL_CHOICES, default=1)
     contents = models.TextField()
