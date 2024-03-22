@@ -31,16 +31,16 @@ class AccountsTest(TestCase):
     def test_post_like(self):
         print('포스트 좋아요 토글 테스트')
         print('>> 비회원 좋아요 불가')
-        response = self.client.post(f'/archive/post/like/1')
+        response = self.client.post(f'/archive/post/1/like/')
         self.assertEqual(response.status_code, 401)
 
-        self.client.login(username='test', password='test1234!')
+        self.client.force_authenticate(self.user)
         print('>> 회원 좋아요 토글')
-        response = self.client.post(f'/archive/post/like/1')
+        response = self.client.post(f'/archive/post/1/like/')
         self.assertEqual(response.status_code, 201)
         print(f'>> 좋아요 클릭1 메세지 : {response.data}')
 
-        response = self.client.post(f'/archive/post/like/1')
+        response = self.client.post(f'/archive/post/1/like/')
         self.assertEqual(response.status_code, 204)
         print(f'>> 좋아요 클릭2 메세지 : {response.data}')
 

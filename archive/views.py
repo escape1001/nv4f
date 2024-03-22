@@ -2,7 +2,8 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from archive.serializers import PostSerializer
-from .models import Post
+from .models import Post, Country, Category, Member, Like
+from django.shortcuts import get_object_or_404
 
 
 @api_view(["GET"])
@@ -114,6 +115,16 @@ def post_filter_list(request):
 
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
-def post_like_toggle(request):
-    pass
+def post_like_toggle(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    user = request.user
+    liked_post_ids = user.likes.values_list('post__id', flat=True)
 
+    if post.id in liked_post_ids:
+        like = Like.objects.get(user=user, post=post)
+        like.delete()
+        return Response(status=204)
+    else:
+        like = Like.objects.create(user=user, post=post)
+        like.save()
+        return Response(status=201)
