@@ -3,6 +3,17 @@ from rest_framework import serializers
 from .models import Post
 
 class PostSerializer(serializers.ModelSerializer):
+    country = serializers.StringRelatedField()
+    city = serializers.SlugRelatedField(slug_field='name', read_only=True)
+    district = serializers.SlugRelatedField(slug_field='name', read_only=True)
+    categories = serializers.StringRelatedField(many=True)
+    members = serializers.StringRelatedField(many=True)
+
     class Meta:
         model = Post
-        fields = "__all__"
+        fields = [
+            "id", "country", "city",
+            "district", "categories", "members",
+            "title", "contents", "thumbnail_image",
+            "map_link"
+        ]

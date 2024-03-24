@@ -8,7 +8,27 @@ from django.shortcuts import get_object_or_404
 
 @api_view(["GET"])
 def post_list(request):
-    posts = Post.objects.all()
+    posts = Post.objects.filter(is_show=True)
+
+    # 쿼리스트링 있는 경우 필터링
+    categories = request.GET.getlist("category")
+    members = request.GET.getlist("member")
+    country = request.GET.get("country")
+    city = request.GET.get("city")
+    district = request.GET.get("district")
+    
+    if categories:
+        posts = posts.filter(categories__name__in=categories).distinct()
+    if members:
+        posts = posts.filter(members__name__in=members).distinct()
+    if country:
+        posts = posts.filter(country__name=country)
+    if city:
+        posts = posts.filter(city__name=city)
+    if district:
+        posts = posts.filter(district__name=district)
+
+
     serializer = PostSerializer(posts, many=True)
 
     return Response(serializer.data)
