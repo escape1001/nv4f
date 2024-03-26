@@ -11,16 +11,19 @@ def post_list(request):
     posts = Post.objects.filter(is_show=True)
 
     # 쿼리스트링 있는 경우 필터링
-    categories = request.GET.getlist("category")
-    members = request.GET.getlist("member")
+    # ?category=식당,관광지&member=효진,이션&country=대한민국 ...
+    categories = request.GET.get("category")
+    members = request.GET.get("member")
     country = request.GET.get("country")
     city = request.GET.get("city")
     district = request.GET.get("district")
     
     if categories:
+        categories = categories.split(",")
         posts = posts.filter(categories__name__in=categories).distinct()
     if members:
-        posts = posts.filter(members__name__in=members).distinct()
+        members = members.split(",")
+        posts = posts.filter(member__name__in=members).distinct()
     if country:
         posts = posts.filter(country__name=country)
     if city:
