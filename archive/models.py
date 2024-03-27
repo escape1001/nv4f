@@ -7,7 +7,7 @@ class Country(models.Model):
     kr_name = models.CharField(max_length=20, blank=True)
 
     def __str__(self):
-        return self.name
+        return self.kr_name
 
 class City(models.Model):
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
@@ -15,7 +15,7 @@ class City(models.Model):
     kr_name = models.CharField(max_length=20, blank=True)
 
     def __str__(self):
-        return f"{self.country} > {self.name}"
+        return f"{self.country} > {self.kr_name}"
 
 class District(models.Model):
     city = models.ForeignKey(City, on_delete=models.CASCADE)
@@ -23,7 +23,7 @@ class District(models.Model):
     kr_name = models.CharField(max_length=20, blank=True)
 
     def __str__(self):
-        return f"{self.city} > {self.name}"
+        return f"{self.city} > {self.kr_name}"
     
 class Post(models.Model):
     LEVEL_CHOICES = [
@@ -56,7 +56,7 @@ class Category(models.Model):
     kr_name = models.CharField(max_length=50, blank=True)
     
     def __str__(self):
-        return self.name
+        return self.kr_name
     
 
 class Member(models.Model):
@@ -64,7 +64,7 @@ class Member(models.Model):
     kr_name = models.CharField(max_length=50, blank=True)
     
     def __str__(self):
-        return self.name
+        return self.kr_name
     
 
 class Like(models.Model):
