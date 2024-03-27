@@ -23,7 +23,7 @@ def post_list(request):
         posts = posts.filter(categories__name__in=categories).distinct()
     if members:
         members = members.split(",")
-        posts = posts.filter(member__name__in=members).distinct()
+        posts = posts.filter(members__name__in=members).distinct()
     if country:
         posts = posts.filter(country__name=country)
     if city:
@@ -31,7 +31,7 @@ def post_list(request):
     if district:
         posts = posts.filter(district__name=district)
 
-
+    
     serializer = PostSerializer(posts, many=True)
 
     return Response(serializer.data)
@@ -83,20 +83,31 @@ def post_filter_list(request):
 
     for country in Country.objects.all():
         country_data = {
-            "country_name": country.name,
+            "name": country.name,
+            "kr_name": country.kr_name,
             "city": []
         }
         for city in country.city_set.all():
             city_data = {
-                "city_name": city.name,
-                "district": city.district_set.values_list("name", flat=True)
+                "name": city.name,
+                "kr_name": city.name,
+                "district": [
+                    {"name": district.name, "kr_name": district.kr_name}
+                    for district in city.district_set.all()
+                ]
             }
             country_data["city"].append(city_data)
         locations.append(country_data)
 
     data = {
-        "categories": Category.objects.values_list("name", flat=True),
-        "members": Member.objects.values_list("name", flat=True),
+        "categories": [
+            {"name": category.name, "kr_name": category.kr_name}
+            for category in Category.objects.all()
+        ],
+        "members": [
+            {"name": member.name, "kr_name": member.kr_name}
+            for member in Member.objects.all()
+        ],
         "locations": locations
     }
 

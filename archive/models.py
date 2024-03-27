@@ -4,6 +4,7 @@ from accounts.models import CustomUser
     
 class Country(models.Model):
     name = models.CharField(max_length=20)
+    kr_name = models.CharField(max_length=20, blank=True)
 
     def __str__(self):
         return self.name
@@ -11,6 +12,7 @@ class Country(models.Model):
 class City(models.Model):
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
     name = models.CharField(max_length=20)
+    kr_name = models.CharField(max_length=20, blank=True)
 
     def __str__(self):
         return f"{self.country} > {self.name}"
@@ -18,6 +20,7 @@ class City(models.Model):
 class District(models.Model):
     city = models.ForeignKey(City, on_delete=models.CASCADE)
     name = models.CharField(max_length=20)
+    kr_name = models.CharField(max_length=20, blank=True)
 
     def __str__(self):
         return f"{self.city} > {self.name}"
@@ -50,6 +53,7 @@ class Post(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=50, unique=True)
+    kr_name = models.CharField(max_length=50, blank=True)
     
     def __str__(self):
         return self.name
@@ -57,6 +61,7 @@ class Category(models.Model):
 
 class Member(models.Model):
     name = models.CharField(max_length=50, unique=True)
+    kr_name = models.CharField(max_length=50, blank=True)
     
     def __str__(self):
         return self.name
